@@ -52,43 +52,9 @@ CREATED → VALIDATED → SENT → COMPLETED
 
 ## Core Requirements
 
-### Database Schema
-
-Your database should include at minimum:
-
-1. **Payments Table**
-   - Payment ID (unique identifier)
-   - Source account
-   - Destination account
-   - Amount
-   - Currency
-   - Current status
-   - Created timestamp
-   - Last updated timestamp
-
-2. **Payment Status History Table**
-   - History ID (unique identifier)
-   - Payment ID (foreign key)
-   - Status
-   - Timestamp
-   - Notes/Comments
-
-3. **Error Codes Table** (optional, could be hardcoded)
-   - Error code
-   - Description
-   - Severity
-
 ### API Endpoints
 
-Your API should support operations such as:
-
-* `POST /payments` - Create a new payment
-* `GET /payments/{id}` - Retrieve payment details
-* `GET /payments/{id}/history` - Get status history for a payment
-* `GET /payments` - List/search payments (with filtering by status)
-* `PUT /payments/{id}/status` - Update payment status (internal operation)
-
-Use the REST API technology taught in your class (e.g., Spring Boot, Flask, Express.js, etc.).
+Design the REST API surface yourselves - decide what operations, routes, and HTTP methods make sense for creating, retrieving, and tracking a payment through its lifecycle. Use the REST API technology taught in your class (e.g., Spring Boot, Flask, Express.js, etc.).
 
 ## Notes
 
@@ -242,52 +208,7 @@ b) Shared with your instructor and all team members.
 
 Throughout your work, you should ensure good communication and organise regular check-ins with each other.
 
-## Appendix B: Sample Data Structures
-
-Below are example data structures to give you ideas. You are NOT expected to implement these exactly - adapt them to your chosen technology stack and requirements.
-
-### Payment Object (JSON)
-
-```json
-{
-  "paymentId": "PAY-12345678",
-  "sourceAccount": "ACC-001-123456",
-  "destinationAccount": "ACC-002-789012",
-  "amount": 1500.00,
-  "currency": "USD",
-  "status": "VALIDATED",
-  "createdAt": "2026-01-22T10:30:00Z",
-  "updatedAt": "2026-01-22T10:30:15Z",
-  "reference": "Invoice-2026-001",
-  "description": "Payment for consulting services"
-}
-```
-
-### Payment Status History Entry (JSON)
-
-```json
-{
-  "historyId": "HIST-98765432",
-  "paymentId": "PAY-12345678",
-  "status": "VALIDATED",
-  "timestamp": "2026-01-22T10:30:15Z",
-  "notes": "All validation checks passed",
-  "previousStatus": "CREATED"
-}
-```
-
-### Error Response (JSON)
-
-```json
-{
-  "errorCode": "VALIDATION_FAILED",
-  "message": "Insufficient funds in source account",
-  "timestamp": "2026-01-22T10:31:00Z",
-  "paymentId": "PAY-12345679"
-}
-```
-
-## Appendix C: Example Error Codes
+## Appendix B: Example Error Codes
 
 Your system should define clear error codes for different failure scenarios:
 
@@ -304,7 +225,7 @@ Your system should define clear error codes for different failure scenarios:
 | PROCESSING_ERROR | Internal error during payment processing | 500 |
 | NETWORK_ERROR | Communication failure with payment network | 503 |
 
-## Appendix D: Validation Rules Examples
+## Appendix C: Validation Rules Examples
 
 Consider implementing validation rules such as:
 
@@ -332,7 +253,7 @@ Consider implementing validation rules such as:
      - SENT → FAILED
    - Invalid transitions should be rejected with clear error messages
 
-## Appendix E: UI Ideas
+## Appendix D: UI Ideas
 
 Below are some UI concepts that might give you ideas. You are DEFINITELY NOT expected to implement these exactly as shown. This is JUST FOR DEMONSTRATION of the type of thing that COULD be shown.
 
@@ -370,7 +291,7 @@ Below are some UI concepts that might give you ideas. You are DEFINITELY NOT exp
   - Any notes or error messages
   - Visual indicators for status transitions
 
-## Appendix F: Advanced Features (If You Have Time)
+## Appendix E: Advanced Features (If You Have Time)
 
 Once you have the core system working, consider these enhancements:
 
@@ -409,7 +330,7 @@ Once you have the core system working, consider these enhancements:
    - Track who performed each action
    - Keep detailed logs for compliance
 
-## Appendix G: Testing Considerations
+## Appendix F: Testing Considerations
 
 Consider these testing scenarios:
 
@@ -437,7 +358,7 @@ Consider these testing scenarios:
    - What happens if database becomes unavailable during processing?
    - Should status update be rolled back?
 
-## Appendix H: Architecture Suggestions
+## Appendix G: Architecture Suggestions
 
 Consider a layered architecture:
 

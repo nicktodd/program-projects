@@ -54,66 +54,9 @@ OPEN → ACKNOWLEDGED → INVESTIGATING → CLOSED
 
 ## Core Requirements
 
-### Database Schema
-
-Your database should include at minimum:
-
-1. **Transactions Table**
-   - Transaction ID (unique identifier)
-   - Account ID
-   - Counterparty/Payee ID
-   - Transaction type (DEBIT/CREDIT)
-   - Amount
-   - Currency
-   - Timestamp
-   - Description/Reference
-   - Status
-
-2. **Alerts Table**
-   - Alert ID (unique identifier)
-   - Rule ID (which rule triggered this alert)
-   - Severity (HIGH/MEDIUM/LOW)
-   - Status (OPEN/ACKNOWLEDGED/INVESTIGATING/CLOSED/DISMISSED)
-   - Created timestamp
-   - Acknowledged timestamp
-   - Acknowledged by (user/operator)
-   - Closed timestamp
-   - Closed by (user/operator)
-   - Resolution notes
-
-3. **Alert Transactions Table** (many-to-many relationship)
-   - Alert ID
-   - Transaction ID
-   - (Links alerts to the transactions that triggered them)
-
-4. **Rules Table**
-   - Rule ID (unique identifier)
-   - Rule name
-   - Rule type (AMOUNT_THRESHOLD, VELOCITY, NEW_PAYEE, etc.)
-   - Rule parameters (JSON or separate columns)
-   - Active/Inactive status
-   - Severity level
-   - Created timestamp
-   - Last modified timestamp
-
 ### API Endpoints
 
-Your API should support operations such as:
-
-* `POST /transactions` - Record a new transaction
-* `GET /transactions` - List transactions (with filtering by date, account, amount)
-* `GET /transactions/{id}` - Retrieve transaction details
-* `GET /alerts` - List alerts (with filtering by status, severity, date)
-* `GET /alerts/{id}` - Retrieve alert details including related transactions
-* `PUT /alerts/{id}/acknowledge` - Acknowledge an alert
-* `PUT /alerts/{id}/status` - Update alert status (investigating, closed, dismissed)
-* `POST /alerts/{id}/notes` - Add resolution notes to an alert
-* `GET /rules` - List all monitoring rules
-* `POST /rules` - Create a new monitoring rule
-* `PUT /rules/{id}` - Update a monitoring rule
-* `DELETE /rules/{id}` - Delete or deactivate a rule
-
-Use the REST API technology taught in your class (e.g., Spring Boot, Flask, Express.js, etc.).
+Design the REST API surface yourselves - decide what operations, routes, and HTTP methods make sense for recording transactions, managing alerts through their lifecycle, and managing monitoring rules. Use the REST API technology taught in your class (e.g., Spring Boot, Flask, Express.js, etc.).
 
 ## Rule Types
 
@@ -301,104 +244,7 @@ b) Shared with your instructor and all team members.
 
 Throughout your work, you should ensure good communication and organise regular check-ins with each other.
 
-## Appendix B: Sample Data Structures
-
-Below are example data structures to give you ideas. You are NOT expected to implement these exactly - adapt them to your chosen technology stack and requirements.
-
-### Transaction Object (JSON)
-
-```json
-{
-  "transactionId": "TXN-20260122-001234",
-  "accountId": "ACC-123456",
-  "payeeId": "PAYEE-789012",
-  "payeeName": "ACME Corp",
-  "type": "DEBIT",
-  "amount": 15000.00,
-  "currency": "USD",
-  "timestamp": "2026-01-22T14:30:45Z",
-  "description": "Wire transfer to supplier",
-  "status": "COMPLETED"
-}
-```
-
-### Alert Object (JSON)
-
-```json
-{
-  "alertId": "ALERT-20260122-5678",
-  "ruleId": "RULE-001",
-  "ruleName": "High Value Transaction",
-  "severity": "HIGH",
-  "status": "OPEN",
-  "message": "Transaction amount exceeds threshold of $10,000",
-  "createdAt": "2026-01-22T14:30:46Z",
-  "acknowledgedAt": null,
-  "acknowledgedBy": null,
-  "closedAt": null,
-  "closedBy": null,
-  "resolutionNotes": null,
-  "transactionIds": ["TXN-20260122-001234"]
-}
-```
-
-### Rule Definition Object (JSON)
-
-```json
-{
-  "ruleId": "RULE-001",
-  "ruleName": "High Value Transaction",
-  "ruleType": "AMOUNT_THRESHOLD",
-  "active": true,
-  "severity": "HIGH",
-  "parameters": {
-    "threshold": 10000.00,
-    "currency": "USD",
-    "transactionType": "DEBIT"
-  },
-  "createdAt": "2026-01-15T09:00:00Z",
-  "lastModified": "2026-01-15T09:00:00Z"
-}
-```
-
-### Velocity Rule Example (JSON)
-
-```json
-{
-  "ruleId": "RULE-002",
-  "ruleName": "Rapid Transaction Velocity",
-  "ruleType": "VELOCITY",
-  "active": true,
-  "severity": "MEDIUM",
-  "parameters": {
-    "maxTransactions": 5,
-    "timeWindowMinutes": 10,
-    "scope": "PER_ACCOUNT"
-  },
-  "createdAt": "2026-01-15T09:00:00Z",
-  "lastModified": "2026-01-15T09:00:00Z"
-}
-```
-
-### New Payee Rule Example (JSON)
-
-```json
-{
-  "ruleId": "RULE-003",
-  "ruleName": "New Payee Detection",
-  "ruleType": "NEW_PAYEE",
-  "active": true,
-  "severity": "LOW",
-  "parameters": {
-    "scope": "PER_ACCOUNT",
-    "lookbackDays": 90
-  },
-  "createdAt": "2026-01-15T09:00:00Z",
-  "lastModified": "2026-01-15T09:00:00Z"
-}
-```
-
-## Appendix C: SQL Query Examples
+## Appendix B: SQL Query Examples
 
 These queries demonstrate the types of database operations useful for rule evaluation:
 
@@ -461,7 +307,7 @@ FROM alerts
 WHERE acknowledged_at IS NOT NULL;
 ```
 
-## Appendix D: UI Ideas
+## Appendix C: UI Ideas
 
 Below are some UI concepts that might give you ideas. You are DEFINITELY NOT expected to implement these exactly as shown. This is JUST FOR DEMONSTRATION of the type of thing that COULD be shown.
 
@@ -523,7 +369,7 @@ Below are some UI concepts that might give you ideas. You are DEFINITELY NOT exp
 * Pie chart: Alert status distribution
 * Line chart: Alert response times trend
 
-## Appendix E: Advanced Features (If You Have Time)
+## Appendix D: Advanced Features (If You Have Time)
 
 Once you have the core system working, consider these enhancements:
 
@@ -578,7 +424,7 @@ Once you have the core system working, consider these enhancements:
     - "Amount > 10000 AND new payee"
     - Time-of-day rules (alerts for transactions outside business hours)
 
-## Appendix F: Testing Considerations
+## Appendix E: Testing Considerations
 
 Consider these testing scenarios:
 
@@ -622,7 +468,7 @@ Consider these testing scenarios:
    - Two operators trying to acknowledge same alert simultaneously
    - Verify data consistency
 
-## Appendix G: Architecture Suggestions
+## Appendix F: Architecture Suggestions
 
 Consider a layered architecture with asynchronous processing:
 
@@ -673,7 +519,7 @@ for async transaction processing
 * Consider read replicas for reporting queries
 * Use transaction isolation appropriately
 
-## Appendix H: Rule Engine Implementation Patterns
+## Appendix G: Rule Engine Implementation Patterns
 
 ### Strategy Pattern Approach
 
@@ -727,7 +573,7 @@ for each rule in rules:
 
 This approach makes rules configurable without code changes but may be less flexible for complex logic.
 
-## Appendix I: Sample Test Data Generator
+## Appendix H: Sample Test Data Generator
 
 To test your system, you may want to create a test data generator:
 
