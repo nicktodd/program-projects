@@ -244,69 +244,6 @@ b) Shared with your instructor and all team members.
 
 Throughout your work, you should ensure good communication and organise regular check-ins with each other.
 
-## Appendix B: SQL Query Examples
-
-These queries demonstrate the types of database operations useful for rule evaluation:
-
-### Query: Transactions Exceeding Threshold
-
-```sql
-SELECT transaction_id, account_id, amount, timestamp
-FROM transactions
-WHERE amount > 10000
-  AND timestamp > NOW() - INTERVAL '1 hour'
-  AND status = 'COMPLETED';
-```
-
-### Query: Count Recent Transactions (Velocity Check)
-
-```sql
-SELECT account_id, COUNT(*) as transaction_count
-FROM transactions
-WHERE timestamp > NOW() - INTERVAL '10 minutes'
-GROUP BY account_id
-HAVING COUNT(*) > 5;
-```
-
-### Query: Detect New Payee
-
-```sql
--- Check if payee has been used before by this account
-SELECT COUNT(*) as previous_transactions
-FROM transactions
-WHERE account_id = 'ACC-123456'
-  AND payee_id = 'PAYEE-789012'
-  AND timestamp < '2026-01-22T14:30:45Z';
--- If count = 0, this is a new payee
-```
-
-### Query: Daily Transaction Total
-
-```sql
-SELECT account_id, 
-       DATE(timestamp) as transaction_date,
-       SUM(amount) as daily_total
-FROM transactions
-WHERE DATE(timestamp) = CURRENT_DATE
-  AND type = 'DEBIT'
-GROUP BY account_id, DATE(timestamp)
-HAVING SUM(amount) > 50000;
-```
-
-### Query: Alert Statistics
-
-```sql
--- Count of alerts by status
-SELECT status, COUNT(*) as alert_count
-FROM alerts
-GROUP BY status;
-
--- Average time to acknowledge alerts
-SELECT AVG(EXTRACT(EPOCH FROM (acknowledged_at - created_at))/60) as avg_minutes
-FROM alerts
-WHERE acknowledged_at IS NOT NULL;
-```
-
 ## Appendix C: UI Ideas
 
 Below are some UI concepts that might give you ideas. You are DEFINITELY NOT expected to implement these exactly as shown. This is JUST FOR DEMONSTRATION of the type of thing that COULD be shown.
