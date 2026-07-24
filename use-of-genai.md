@@ -31,7 +31,7 @@ Remember: The goal is not just to complete the project, but to **learn how to bu
    - Sprint retrospective is mandatory
    - Discussion & reflection > speed of coding
 2. **Repository Hygiene**
-   - Proper branching strategy: prod / main, qa / release, feature/*
+   - Suitable branching strategy: prod / main, qa / release, feature/*
    - Commit regularly (small, meaningful commits)
    - Clear commit messages (why, not just what)
    - Pull Request mandatory

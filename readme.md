@@ -4,6 +4,10 @@ This folder contains final-week project options for the training program.
 
 Each team should pick **one** project and use its specification document as the source of detailed requirements.
 
+Before choosing implementation details, review the shared startup guide: [getting_started.md](getting_started.md).
+
+For guidance on working with your instructor as customer, see: [customer_management.md](customer_management.md).
+
 ## How to Choose
 
 Pick a project based on the type of problem your team wants to solve:
