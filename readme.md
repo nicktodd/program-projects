@@ -8,6 +8,10 @@ Before choosing implementation details, review the shared startup guide: [gettin
 
 For guidance on working with your instructor as customer, see: [customer_management.md](customer_management.md).
 
+For guidelines on your final presentation, see: [presentations.md](presentations.md).
+
+For mandatory guidelines on using Generative AI tools during this project, see: [use-of-genai.md](use-of-genai.md).
+
 ## How to Choose
 
 Pick a project based on the type of problem your team wants to solve:
